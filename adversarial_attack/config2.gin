@@ -1,7 +1,7 @@
 ################################################ YoloV3 Adversarial Attack Generator ################################################
 
 # # ------------ Run Command Options ------------
-run_script.execute = 'visualize'                                                                           # Main logic command: choose from ('train','visualize','evaluate','optimize')
+run_script.execute = 'train'                                                                           # Main logic command: choose from ('train','visualize','evaluate','optimize')
 run_script.device = 'cpu'                                                                                  # Device to run on ('cpu' or 'cuda:0' 'cuda')
 run_script.coco_names = 'yolov3/data/coco.names'                                                           # Path to the coco names file (string)
 run_script.log_file_name = 'training0_log.txt'                                                             # Logging file to capture console logging (string)
@@ -42,5 +42,5 @@ generate_attack.givenX = 100                                                    
 generate_attack.givenY = 33                                                                                # Specific Y to train a patch if randomize = False (int)
 generate_attack.num_random_generations = 15                                                                # Number of random generations to average per epoch when using randomize = True (int)
 generate_attack.image_path = 'data/'                                                                       # Path to data folder of images (string)
-generate_attack.patch_width = 80                                                                          # Desired patch width (int)
-generate_attack.patch_height = 80                                                                         # Desired patch height (int)
+generate_attack.patch_width = 5                                                                          # Desired patch width (int)
+generate_attack.patch_height = 5                                                                         # Desired patch height (int)
