@@ -42,5 +42,5 @@ generate_attack.givenX = 100                                                    
 generate_attack.givenY = 33                                                                                # Specific Y to train a patch if randomize = False (int)
 generate_attack.num_random_generations = 15                                                                # Number of random generations to average per epoch when using randomize = True (int)
 generate_attack.image_path = 'data/'                                                                       # Path to data folder of images (string)
-generate_attack.patch_width = 2                                                                          # Desired patch width (int)
-generate_attack.patch_height = 2                                                                         # Desired patch height (int)
+generate_attack.patch_width = 0.5                                                                          # Desired patch width (int)
+generate_attack.patch_height = 0.5                                                                        # Desired patch height (int)
