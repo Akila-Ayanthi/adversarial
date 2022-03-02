@@ -1,7 +1,7 @@
 ################################################ YoloV3 Adversarial Attack Generator ################################################
 
 # # ------------ Run Command Options ------------
-run_script.execute = 'visualize'                                                                           # Main logic command: choose from ('train','visualize','evaluate','optimize')
+run_script.execute = 'train'                                                                           # Main logic command: choose from ('train','visualize','evaluate','optimize')
 run_script.device = 'cuda'                                                                                  # Device to run on ('cpu' or 'cuda:0' 'cuda')
 run_script.coco_names = 'yolov3/data/coco.names'                                                           # Path to the coco names file (string)
 run_script.log_file_name = 'training0_log.txt'                                                             # Logging file to capture console logging (string)
@@ -9,7 +9,7 @@ run_script.log_file_name = 'training0_log.txt'                                  
 run_script.run_name = 'training0'                                                                          # Run name where results are saved (string)
 run_script.height = 416                                                                                   # Desired height of all imagery (int)
 run_script.width = 416                                                                                   # Desired width of all imagery (int)
-run_script.offset = 5                                                                                     # Desired distance between the bounding box and the edge of the patch (int)
+run_script.offset = 50                                                                                     # Desired distance between the bounding box and the edge of the patch (int)
 
 # ------------ Evaluation Command Options ------------
 evaluate.command = 'random'                                                                                # Logic command for evaluation: choose from ('single', 'all','random','noise')
