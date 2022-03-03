@@ -5,6 +5,9 @@ from matplotlib import pyplot as plt
 import matplotlib.patches as patches
 import torch
 import torch.nn as nn
+import torchvision
+import torchvision.transforms as T
+from PIL import Image
 import pandas as pd
 import numpy as np
 from torch.autograd import Variable
@@ -936,28 +939,34 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             # Calculate the new bounding box
             bounding_box = predictions[0][0:4].detach().tolist()[0]
 
-            # Perform plotting using Pyplot from Matplotlib
-            fig = plt.figure()
-            ax = fig.add_subplot(111)
-            # ax = fig.add_subplot(1,3,2)
-            ax.imshow(combined_img[0,:,:,:].int().permute(1, 2, 0))
+            # transform = T.ToPILImage()
+            # img = transform(combined_img)
+
+
+            # # Perform plotting using Pyplot from Matplotlib
+            # fig = plt.figure()
+            # ax = fig.add_subplot(111)
+            # # ax = fig.add_subplot(1,3,2)
+            # ax.imshow(combined_img[0,:,:,:].int().permute(1, 2, 0))
             rect = patches.Rectangle((bounding_box[0], bounding_box[1]), bounding_box[2] - bounding_box[0],
                                      bounding_box[3] - bounding_box[1], linewidth=1, edgecolor='b', facecolor='none')
-            ax.text(bounding_box[0], bounding_box[1], string, color='b')
-            ax.add_patch(rect)
-            ax.set_title('Partial Attack')
-            ax.axis('off')
 
-            if save_plots:
-            # Construct the figure directory within the directory where the patch is
-                strs = numpy_patch_path.split('/')
-                fig_dir = os.path.join(*strs[:-2], 'figures')
-                if not os.path.exists(fig_dir):
-                    os.makedirs(fig_dir)
-                output_name = image_names[k]
-                index = output_name.rfind(".")
-                output_name = output_name[:index] + "_adversarial_result.png"
-                fig.savefig(os.path.join(fig_dir, output_name))
+            print(rect)
+            # ax.text(bounding_box[0], bounding_box[1], string, color='b')
+            # ax.add_patch(rect)
+            # ax.set_title('Partial Attack')
+            # ax.axis('off')
+
+            # if save_plots:
+            # # Construct the figure directory within the directory where the patch is
+            #     strs = numpy_patch_path.split('/')
+            #     fig_dir = os.path.join(*strs[:-2], 'figures')
+            #     if not os.path.exists(fig_dir):
+            #         os.makedirs(fig_dir)
+            #     output_name = image_names[k]
+            #     index = output_name.rfind(".")
+            #     output_name = output_name[:index] + "_adversarial_result.png"
+            #     fig.savefig(os.path.join(fig_dir, output_name))
 
 
 
