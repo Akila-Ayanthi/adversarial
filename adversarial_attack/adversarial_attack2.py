@@ -63,9 +63,6 @@ def apply_patch(positions,patched_img, adv_patch,givenX=None,givenY=None,randomi
     patch_height = adv_patch.shape[1]
     patch_width = adv_patch.shape[2]
 
-    print(patch_height)
-    print(patch_width)
-
     if randomize == True:
 
         # Pick a random (x,y) from positions
@@ -260,8 +257,8 @@ def generate_attack(names,writer,model, device, run_name, image_path, load_path,
     logging.info('------------------- Attack Generation started: {}   -----------------------'.format(start_time.strftime("%Y.%m.%d:%H.%M.%S")))
     logging.info('Running on {} with seed: {} and randomize: {}'.format(device, seed,randomize))
 
-    # print(patch_height)
-    # print(patch_width)
+    print(patch_height)
+    print(patch_width)
     print(load)
 
     # Create the result_path to save to
