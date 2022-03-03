@@ -940,7 +940,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             bounding_box = predictions[0][0:4].detach().tolist()[0]
 
             transform = T.ToPILImage()
-            # combined_img = np.transpose(single_image)
+            combined_img = np.transpose(combined_img)
             img = transform(combined_img[0,:,:,:])
 
             if save_plots:
