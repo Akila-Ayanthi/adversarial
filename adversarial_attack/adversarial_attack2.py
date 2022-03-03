@@ -939,9 +939,9 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             # Calculate the new bounding box
             bounding_box = predictions[0][0:4].detach().tolist()[0]
 
-            transform = T.ToPILImage()
+            transform = T.ToPILImage(mode='RGB')
             # combined_img = np.transpose(combined_img[0,:,:,:], (1, 2, 0, 3))
-            img = transform(combined_img[0,:,:,:].int())
+            img = transform(combined_img[0,:,:,:])
 
             if save_plots:
             # Construct the figure directory within the directory where the patch is
