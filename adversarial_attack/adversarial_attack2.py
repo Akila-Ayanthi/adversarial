@@ -260,8 +260,8 @@ def generate_attack(names,writer,model, device, run_name, image_path, load_path,
     logging.info('------------------- Attack Generation started: {}   -----------------------'.format(start_time.strftime("%Y.%m.%d:%H.%M.%S")))
     logging.info('Running on {} with seed: {} and randomize: {}'.format(device, seed,randomize))
 
-    print(height)
-    print(width)
+    print(patch_height)
+    print(patch_width)
 
     # Create the result_path to save to
     result_path = os.path.join('results', run_name)
