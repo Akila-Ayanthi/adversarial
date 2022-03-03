@@ -887,25 +887,7 @@ def optimize(names,model,device,height,width,offset,learning_rates,generations_c
 
 
 @gin.configurable()
-def visualize(names,model,device,image_path,numpy_patch_path,offset,height,width, save_plots=True):
-    """
-    This function visualizes bounding boxes and adversarial patches on data.
-    Params:
-       names --> The list of names associated with yoloV3's returned class label (list)
-       model --> The Nnet model (darknet model)
-       device --> The device to run on (either 'cpu' or 'cuda:0')
-       image_path --> The path to the data directory for the images (string)
-       numpy_patch_path --> The path to the saved adversarial patch (string)
-       offset --> The minimum distance between the bounding box and the edge of the patch (int)
-       height --> The desired height of all images
-       width --> The desired width of all images
-
-    Returns:
-         None --> Shows images on display
-
-    """
-    logging.info("Running visualize ")
-
+def visualize(names, model, device, image_path, numpy_patch_path, offset, height, width, save_plots=True):
     # Load the images
     image_tensor, image_names = load_image(image_path,height,width)
 
@@ -924,13 +906,13 @@ def visualize(names,model,device,image_path,numpy_patch_path,offset,height,width
         single_image = image_tensor[k, :, :, :]
 
         # Perform plotting using Pyplot from Matplotlib
-        fig = plt.figure(k,figsize=(6,4))
-        ax = fig.add_subplot(1,3,1)
-        ax.imshow(single_image.permute(1,2,0))
-        ax.set_title('Original')
-        rect = patches.Rectangle((ground_truth[0],ground_truth[1]),ground_truth[2]-ground_truth[0],ground_truth[3]-ground_truth[1],linewidth=1,edgecolor='r',facecolor='none')
-        ax.text(ground_truth[0],ground_truth[1],string,color='r')
-        ax.add_patch(rect)
+        # fig = plt.figure(k,figsize=(6,4))
+        # ax = fig.add_subplot(1,3,1)
+        # ax.imshow(single_image.permute(1,2,0))
+        # ax.set_title('Original')
+        # rect = patches.Rectangle((ground_truth[0],ground_truth[1]),ground_truth[2]-ground_truth[0],ground_truth[3]-ground_truth[1],linewidth=1,edgecolor='r',facecolor='none')
+        # ax.text(ground_truth[0],ground_truth[1],string,color='r')
+        # ax.add_patch(rect)
 
 
         # Load the adversarial patch
@@ -945,10 +927,9 @@ def visualize(names,model,device,image_path,numpy_patch_path,offset,height,width
         # Add a batch dimension
         combined_img = combined_img[np.newaxis,:,:,:]
 
-        # Calculate predictions for the combined image
+         # Calculate predictions for the combined image
         predictions = detect(combined_img, model, device)
 
-        # If an object was detected ...
         if predictions != []:
             # Generate the label for the image
             string = names[int(predictions[0][0][5].item())]  + " " + str(round(predictions[0][0][4].item(), 4))
@@ -956,7 +937,9 @@ def visualize(names,model,device,image_path,numpy_patch_path,offset,height,width
             bounding_box = predictions[0][0:4].detach().tolist()[0]
 
             # Perform plotting using Pyplot from Matplotlib
-            ax = fig.add_subplot(1,3,2)
+            fig = plt.figure()
+            ax = fig.add_subplot(111)
+            # ax = fig.add_subplot(1,3,2)
             ax.imshow(combined_img[0,:,:,:].int().permute(1, 2, 0))
             rect = patches.Rectangle((bounding_box[0], bounding_box[1]), bounding_box[2] - bounding_box[0],
                                      bounding_box[3] - bounding_box[1], linewidth=1, edgecolor='b', facecolor='none')
@@ -964,49 +947,6 @@ def visualize(names,model,device,image_path,numpy_patch_path,offset,height,width
             ax.add_patch(rect)
             ax.set_title('Partial Attack')
 
-        # If no object was detected...
-        else:
-            # Perform plotting using Pyplot from Matplotlib
-            ax = fig.add_subplot(1,3,2)
-            ax.imshow(combined_img[0, :, :, :].int().permute(1, 2, 0))
-            ax.set_title('Lethal Attack')
-
-        # Remove batch dimension for open CV's Gaussian Blur function
-        combined_img = combined_img[0,:,:,:]
-
-        # Permute image and convert to numpy array for open CV Gaussian Blur operator
-        blurred_image = combined_img.permute(1, 2, 0).int().numpy()
-
-        # Apply blur colonel
-        blur = cv.GaussianBlur(blurred_image.astype(np.uint8), (5, 5), 0)
-
-        # Permute back and add a batch dimension for detector
-        blur = torch.tensor(blur).permute(2, 0, 1)
-        full_blur = blur[np.newaxis, :, :, :]
-
-        # Calculate detection
-        predictions = detect(full_blur, model, device)
-
-        # If an object was detected ...
-        if predictions != []:
-            # Generate the label for the image
-            string = names[int(predictions[0][0][5].item())]  + " " + str(round(predictions[0][0][4].item(), 4))
-            # Calculate the new bounding box
-            bounding_box = predictions[0][0:4].detach().tolist()[0]
-
-            # Perform plotting using Pyplot from Matplotlib
-            ax = fig.add_subplot(1,3,3)
-            ax.imshow(full_blur[0,:,:,:].int().permute(1, 2, 0))
-            rect = patches.Rectangle((bounding_box[0], bounding_box[1]), bounding_box[2] - bounding_box[0],
-                                     bounding_box[3] - bounding_box[1], linewidth=1, edgecolor='b', facecolor='none')
-            ax.text(bounding_box[0], bounding_box[1], string, color='b')
-            ax.add_patch(rect)
-            ax.set_title('Attack with Gaussian Blur')
-        plt.show()
-
-        # Save the plots
-        if save_plots:
-            # Construct the figure directory within the directory where the patch is
             strs = numpy_patch_path.split('/')
             fig_dir = os.path.join(*strs[:-2], 'figures')
             if not os.path.exists(fig_dir):
@@ -1014,7 +954,139 @@ def visualize(names,model,device,image_path,numpy_patch_path,offset,height,width
             output_name = image_names[k]
             index = output_name.rfind(".")
             output_name = output_name[:index] + "_adversarial_result.png"
-            fig.savefig(os.path.join(fig_dir, output_name))
+            fig.savefig('')
+
+
+
+# @gin.configurable()
+# def visualize(names,model,device,image_path,numpy_patch_path,offset,height,width, save_plots=True):
+#     """
+#     This function visualizes bounding boxes and adversarial patches on data.
+#     Params:
+#        names --> The list of names associated with yoloV3's returned class label (list)
+#        model --> The Nnet model (darknet model)
+#        device --> The device to run on (either 'cpu' or 'cuda:0')
+#        image_path --> The path to the data directory for the images (string)
+#        numpy_patch_path --> The path to the saved adversarial patch (string)
+#        offset --> The minimum distance between the bounding box and the edge of the patch (int)
+#        height --> The desired height of all images
+#        width --> The desired width of all images
+
+#     Returns:
+#          None --> Shows images on display
+
+#     """
+#     logging.info("Running visualize ")
+
+#     # Load the images
+#     image_tensor, image_names = load_image(image_path,height,width)
+
+#     # Get the base predictions for the unmodified images
+#     base_prediction = detect(image_tensor, model, device)
+
+#     # For every image in the batch...
+#     for k in range(image_tensor.shape[0]):
+#         # Generate the label for the image
+#         string = names[int(base_prediction[0][0][5].item())] + " " + str(round(base_prediction[k][0][4].item(),4))
+
+#         ground_truth = base_prediction[k][0:4].detach().tolist()[0] # List form of the bounding box
+#         truth = base_prediction[k][0:4].detach()[0] # Torch.Tensor for of the bounding box
+
+#         # Seperate the batch to obtain a tensor with batch size 1
+#         single_image = image_tensor[k, :, :, :]
+
+#         # Perform plotting using Pyplot from Matplotlib
+#         fig = plt.figure(k,figsize=(6,4))
+#         ax = fig.add_subplot(1,3,1)
+#         ax.imshow(single_image.permute(1,2,0))
+#         ax.set_title('Original')
+#         rect = patches.Rectangle((ground_truth[0],ground_truth[1]),ground_truth[2]-ground_truth[0],ground_truth[3]-ground_truth[1],linewidth=1,edgecolor='r',facecolor='none')
+#         ax.text(ground_truth[0],ground_truth[1],string,color='r')
+#         ax.add_patch(rect)
+
+
+#         # Load the adversarial patch
+#         delta = torch.from_numpy(np.load(numpy_patch_path))
+
+#         # Calculate acceptable positions foe the patch
+#         image_locations = calculate_positions(single_image, delta, truth, offset)
+
+#         # Combine the image and the path
+#         combined_img = apply_patch(patched_img=single_image,adv_patch=delta,positions=image_locations)
+
+#         # Add a batch dimension
+#         combined_img = combined_img[np.newaxis,:,:,:]
+
+#         # Calculate predictions for the combined image
+#         predictions = detect(combined_img, model, device)
+
+#         # If an object was detected ...
+#         if predictions != []:
+#             # Generate the label for the image
+#             string = names[int(predictions[0][0][5].item())]  + " " + str(round(predictions[0][0][4].item(), 4))
+#             # Calculate the new bounding box
+#             bounding_box = predictions[0][0:4].detach().tolist()[0]
+
+#             # Perform plotting using Pyplot from Matplotlib
+#             ax = fig.add_subplot(1,3,2)
+#             ax.imshow(combined_img[0,:,:,:].int().permute(1, 2, 0))
+#             rect = patches.Rectangle((bounding_box[0], bounding_box[1]), bounding_box[2] - bounding_box[0],
+#                                      bounding_box[3] - bounding_box[1], linewidth=1, edgecolor='b', facecolor='none')
+#             ax.text(bounding_box[0], bounding_box[1], string, color='b')
+#             ax.add_patch(rect)
+#             ax.set_title('Partial Attack')
+
+#         # If no object was detected...
+#         else:
+#             # Perform plotting using Pyplot from Matplotlib
+#             ax = fig.add_subplot(1,3,2)
+#             ax.imshow(combined_img[0, :, :, :].int().permute(1, 2, 0))
+#             ax.set_title('Lethal Attack')
+
+#         # Remove batch dimension for open CV's Gaussian Blur function
+#         combined_img = combined_img[0,:,:,:]
+
+#         # Permute image and convert to numpy array for open CV Gaussian Blur operator
+#         blurred_image = combined_img.permute(1, 2, 0).int().numpy()
+
+#         # Apply blur colonel
+#         blur = cv.GaussianBlur(blurred_image.astype(np.uint8), (5, 5), 0)
+
+#         # Permute back and add a batch dimension for detector
+#         blur = torch.tensor(blur).permute(2, 0, 1)
+#         full_blur = blur[np.newaxis, :, :, :]
+
+#         # Calculate detection
+#         predictions = detect(full_blur, model, device)
+
+#         # If an object was detected ...
+#         if predictions != []:
+#             # Generate the label for the image
+#             string = names[int(predictions[0][0][5].item())]  + " " + str(round(predictions[0][0][4].item(), 4))
+#             # Calculate the new bounding box
+#             bounding_box = predictions[0][0:4].detach().tolist()[0]
+
+#             # Perform plotting using Pyplot from Matplotlib
+#             ax = fig.add_subplot(1,3,3)
+#             ax.imshow(full_blur[0,:,:,:].int().permute(1, 2, 0))
+#             rect = patches.Rectangle((bounding_box[0], bounding_box[1]), bounding_box[2] - bounding_box[0],
+#                                      bounding_box[3] - bounding_box[1], linewidth=1, edgecolor='b', facecolor='none')
+#             ax.text(bounding_box[0], bounding_box[1], string, color='b')
+#             ax.add_patch(rect)
+#             ax.set_title('Attack with Gaussian Blur')
+#         plt.show()
+
+#         # Save the plots
+#         if save_plots:
+#             # Construct the figure directory within the directory where the patch is
+#             strs = numpy_patch_path.split('/')
+#             fig_dir = os.path.join(*strs[:-2], 'figures')
+#             if not os.path.exists(fig_dir):
+#                 os.makedirs(fig_dir)
+#             output_name = image_names[k]
+#             index = output_name.rfind(".")
+#             output_name = output_name[:index] + "_adversarial_result.png"
+#             fig.savefig(os.path.join(fig_dir, output_name))
 
 
 @gin.configurable()
