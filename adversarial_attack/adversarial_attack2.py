@@ -948,7 +948,8 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             rect = patches.Rectangle((bounding_box[0], bounding_box[1]), bounding_box[2] - bounding_box[0],
                                      bounding_box[3] - bounding_box[1], linewidth=1, edgecolor='b', facecolor='none')
             plt.text(bounding_box[0], bounding_box[1], string, color='b')
-            plt.add_patch(rect)
+            # plt.add_patch(rect)
+            plt.Rectangle(rect)
             plt.axis('off')
 
             # rect = patches.Rectangle((bounding_box[0], bounding_box[1]), bounding_box[2] - bounding_box[0],
