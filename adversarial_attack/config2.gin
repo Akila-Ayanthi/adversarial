@@ -30,7 +30,7 @@ optimize.generations_choices = [1,2]                                            
 
 # ------------ Attack Generation Command Options ------------
 generate_attack.alpha = 0.9                                                                                # Momentum (float)
-generate_attack.epochs = 10                                                                              # Number of Epochs to train for (int)
+generate_attack.epochs = 3                                                                             # Number of Epochs to train for (int)
 generate_attack.lr = 15                                                                                    # Learning rate (int)
 generate_attack.lr_scale = 0.80                                                                            # Scale learning rate by this amount every 'lr_length' epochs (float)
 generate_attack.lr_length = 40                                                                             # Drop learning rate every lr_length epochs (int)
