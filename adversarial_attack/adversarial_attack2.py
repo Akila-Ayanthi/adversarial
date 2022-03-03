@@ -1,3 +1,4 @@
+from statistics import mode
 from yolov3.modified_detect import *
 from yolov3.utils.simple_dataset import *
 from yolov3.utils.utils import *
@@ -939,10 +940,10 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             # Calculate the new bounding box
             bounding_box = predictions[0][0:4].detach().tolist()[0]
 
-            transform = T.ToPILImage()
+            transform = T.ToPILImage(mode=None)
             # combined_img = combined_img.numpy()
             # combined_img = np.transpose(combined_img, (1, 2, 0))
-            img = transform(combined_img[0,:,:,:].permute(0, 2, 1))
+            img = transform(combined_img.permute(0, 2, 1))
 
             if save_plots:
             # Construct the figure directory within the directory where the patch is
