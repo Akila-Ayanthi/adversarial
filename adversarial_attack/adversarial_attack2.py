@@ -947,14 +947,15 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             ax.add_patch(rect)
             ax.set_title('Partial Attack')
 
-            strs = numpy_patch_path.split('/')
-            fig_dir = os.path.join(*strs[:-2], 'figures')
-            if not os.path.exists(fig_dir):
-                os.makedirs(fig_dir)
-            output_name = image_names[k]
-            index = output_name.rfind(".")
-            output_name = output_name[:index] + "_adversarial_result.png"
-            fig.savefig('')
+            if save_plots:
+                strs = numpy_patch_path.split('/')
+                fig_dir = os.path.join(*strs[:-2], 'figures')
+                if not os.path.exists(fig_dir):
+                    os.makedirs(fig_dir)
+                output_name = image_names[k]
+                index = output_name.rfind(".")
+                output_name = output_name[:index] + "_adversarial_result.png"
+                fig.savefig('')
 
 
 
