@@ -926,7 +926,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
 
         # Seperate the batch to obtain a tensor with batch size 1
         single_image = image_tensor[k, :, :, :]
-        print(single_image)
+        print(single_image.shape)
 
         # Perform plotting using Pyplot from Matplotlib
         # fig = plt.figure(k,figsize=(6,4))
@@ -939,59 +939,59 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
 
 
         # Load the adversarial patch
-        delta = torch.from_numpy(np.load(numpy_patch_path))
-        print(delta.shape)
+        # delta = torch.from_numpy(np.load(numpy_patch_path))
+        # print(delta.shape)
 
-        # Calculate acceptable positions foe the patch
-        image_locations = calculate_positions(single_image, delta, truth, offset)
+        # # Calculate acceptable positions foe the patch
+        # image_locations = calculate_positions(single_image, delta, truth, offset)
 
-        # Combine the image and the path
-        combined_img = apply_patch(patched_img=single_image,adv_patch=delta,positions=image_locations)
+        # # Combine the image and the path
+        # combined_img = apply_patch(patched_img=single_image,adv_patch=delta,positions=image_locations)
 
-        # Add a batch dimension
-        combined_img = combined_img[np.newaxis,:,:,:]
+        # # Add a batch dimension
+        # combined_img = combined_img[np.newaxis,:,:,:]
 
-         # Calculate predictions for the combined image
-        predictions = detect(combined_img, model, device)
+        #  # Calculate predictions for the combined image
+        # predictions = detect(combined_img, model, device)
 
-        if predictions != []:
-            # Generate the label for the image
-            string = names[int(predictions[0][0][5].item())]  + " " + str(round(predictions[0][0][4].item(), 4))
-            # Calculate the new bounding box
-            bounding_box = predictions[0][0:4].detach().tolist()[0]
+        # if predictions != []:
+        #     # Generate the label for the image
+        #     string = names[int(predictions[0][0][5].item())]  + " " + str(round(predictions[0][0][4].item(), 4))
+        #     # Calculate the new bounding box
+        #     bounding_box = predictions[0][0:4].detach().tolist()[0]
 
-            # transform = T.ToPILImage(mode=None)
-            # combined_img = combined_img.numpy()
-            # combined_img = np.transpose(combined_img[0,:,:,:], (1, 2, 0))
-            # print(combined_img)
-            # img = transform(combined_img[0,:,:,:])
-            # img = cv2.cvtColor(np.array(combined_img[0].int()), cv2.COLOR_RGB2BGR)
-            # img = T.ToPILImage(mode=None)(img)
+        #     # transform = T.ToPILImage(mode=None)
+        #     # combined_img = combined_img.numpy()
+        #     # combined_img = np.transpose(combined_img[0,:,:,:], (1, 2, 0))
+        #     # print(combined_img)
+        #     # img = transform(combined_img[0,:,:,:])
+        #     # img = cv2.cvtColor(np.array(combined_img[0].int()), cv2.COLOR_RGB2BGR)
+        #     # img = T.ToPILImage(mode=None)(img)
 
-            tensor = np.array(single_image, dtype=np.uint8)
-            img = PIL.Image.fromarray(tensor)
+        #     tensor = np.array(single_image, dtype=np.uint8)
+        #     img = PIL.Image.fromarray(tensor)
 
-            # img  = combined_img[0,:,:,:].int().permute(1, 2, 0).cpu().numpy() # make sure tensor is on cpu
-            # print(img)
-            # c_img = cv2.cvtColor(np.float32(single_image), cv2.COLOR_RGB2BGR)
-            # img = single_image.cpu().numpy()
-            # c_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            # print(img)
-            # cv2.imwrite(combined_img, "image.png")
-            # print(combined_img[0][0])
+        #     # img  = combined_img[0,:,:,:].int().permute(1, 2, 0).cpu().numpy() # make sure tensor is on cpu
+        #     # print(img)
+        #     # c_img = cv2.cvtColor(np.float32(single_image), cv2.COLOR_RGB2BGR)
+        #     # img = single_image.cpu().numpy()
+        #     # c_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        #     # print(img)
+        #     # cv2.imwrite(combined_img, "image.png")
+        #     # print(combined_img[0][0])
 
-            if save_plots:
-            # Construct the figure directory within the directory where the patch is
-                strs = numpy_patch_path.split('/')
-                fig_dir = os.path.join(*strs[:-2], 'figures')
-                if not os.path.exists(fig_dir):
-                    os.makedirs(fig_dir)
-                output_name = image_names[k]
-                index = output_name.rfind(".")
-                output_name = output_name[:index] + "_adversarial_result.png"
+        #     if save_plots:
+        #     # Construct the figure directory within the directory where the patch is
+        #         strs = numpy_patch_path.split('/')
+        #         fig_dir = os.path.join(*strs[:-2], 'figures')
+        #         if not os.path.exists(fig_dir):
+        #             os.makedirs(fig_dir)
+        #         output_name = image_names[k]
+        #         index = output_name.rfind(".")
+        #         output_name = output_name[:index] + "_adversarial_result.png"
 
-            # img = img.save(os.path.join(fig_dir, output_name))
-            cv2.imwrite(str(os.path.join(fig_dir, output_name)), img)
+        #     # img = img.save(os.path.join(fig_dir, output_name))
+        #     cv2.imwrite(str(os.path.join(fig_dir, output_name)), img)
 
 
             # # Perform plotting using Pyplot from Matplotlib
