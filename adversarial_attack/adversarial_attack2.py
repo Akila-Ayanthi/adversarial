@@ -322,7 +322,7 @@ def generate_attack(names,writer,model, device, run_name, image_path, load_path,
 
         # Create a new delta of the specified dimensions
         delta = torch.ones((3,patch_width,patch_height), requires_grad=True)
-        print(delta)
+        print(delta.shape)
         best_confidence = 1
         load_epoch = -1
 
