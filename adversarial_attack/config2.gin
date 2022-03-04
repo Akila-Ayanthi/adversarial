@@ -21,7 +21,7 @@ evaluate.step_size = 100                                                        
 
 # ------------ Visualization Command Options ------------
 visualize.image_path = 'data/'                                                                             # Path to data folder of images (string)
-visualize.numpy_patch_path = 'results/full_dataset/numpy_files/final_model.npy'                            # Path to delta to load for visualization (string)
+visualize.numpy_patch_path = 'results/training0/numpy_files/final_model.npy'                            # Path to delta to load for visualization (string)
 visualize.save_plots = True                                                                                # Flag to save plots from visualization (boolean)
 
 # ------------ Optimize Command Options ------------
