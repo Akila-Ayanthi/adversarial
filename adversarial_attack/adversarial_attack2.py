@@ -963,7 +963,10 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             # combined_img = np.transpose(combined_img[0,:,:,:], (1, 2, 0))
             # print(combined_img)
             # img = transform(combined_img[0,:,:,:])
-            img = T.ToPILImage(mode=None)(combined_img[0,:,:,:].permute(1, 2, 0))
+            # img = T.ToPILImage(mode=None)(combined_img.permute(1, 2, 0))
+
+            img  = combined_img.cpu().numpy() # make sure tensor is on cpu
+            # cv2.imwrite(combined_img, "image.png")
             # print(combined_img[0][0])
 
             if save_plots:
@@ -976,7 +979,8 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
                 index = output_name.rfind(".")
                 output_name = output_name[:index] + "_adversarial_result.png"
 
-            img = img.save(os.path.join(fig_dir, output_name))
+            # img = img.save(os.path.join(fig_dir, output_name))
+            cv2.imwrite(img, os.path.join(fig_dir, output_name))
 
 
             # # Perform plotting using Pyplot from Matplotlib
