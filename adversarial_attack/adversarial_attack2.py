@@ -983,7 +983,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
                 output_name = output_name[:index] + "_adversarial_result.png"
 
             # img = img.save(os.path.join(fig_dir, output_name))
-            cv2.imwrite(str(os.path.join(fig_dir, output_name)), img[0])
+            cv2.imwrite(str(os.path.join(fig_dir, output_name)), cv2.cvtColor(img[0], cv2.COLOR_RGB2BGR))
 
 
             # # Perform plotting using Pyplot from Matplotlib
