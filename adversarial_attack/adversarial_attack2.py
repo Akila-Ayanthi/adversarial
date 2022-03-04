@@ -947,36 +947,36 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
         combined_img = apply_patch(patched_img=single_image,adv_patch=delta,positions=image_locations)
 
         # Add a batch dimension
-        # combined_img = combined_img[np.newaxis,:,:,:]
+        combined_img = combined_img[np.newaxis,:,:,:]
 
-        #  # Calculate predictions for the combined image
-        # predictions = detect(combined_img, model, device)
+         # Calculate predictions for the combined image
+        predictions = detect(combined_img, model, device)
 
-        # if predictions != []:
-        #     # Generate the label for the image
-        #     string = names[int(predictions[0][0][5].item())]  + " " + str(round(predictions[0][0][4].item(), 4))
-        #     # Calculate the new bounding box
-        #     bounding_box = predictions[0][0:4].detach().tolist()[0]
+        if predictions != []:
+            # Generate the label for the image
+            string = names[int(predictions[0][0][5].item())]  + " " + str(round(predictions[0][0][4].item(), 4))
+            # Calculate the new bounding box
+            bounding_box = predictions[0][0:4].detach().tolist()[0]
 
-        #     # transform = T.ToPILImage(mode=None)
-        #     # combined_img = combined_img.numpy()
-        #     # combined_img = np.transpose(combined_img[0,:,:,:], (1, 2, 0))
-        #     # print(combined_img)
-        #     # img = transform(combined_img[0,:,:,:])
-        #     pil_image = T.ToPILImage()(combined_img[0,:,:,:])
-        #     # print(img)
+            # transform = T.ToPILImage(mode=None)
+            # combined_img = combined_img.numpy()
+            # combined_img = np.transpose(combined_img[0,:,:,:], (1, 2, 0))
+            # print(combined_img)
+            # img = transform(combined_img[0,:,:,:])
+            pil_image = T.ToPILImage()(combined_img[0,:,:,:])
+            # print(img)
 
-        #     if save_plots:
-        #     # Construct the figure directory within the directory where the patch is
-        #         strs = numpy_patch_path.split('/')
-        #         fig_dir = os.path.join(*strs[:-2], 'figures')
-        #         if not os.path.exists(fig_dir):
-        #             os.makedirs(fig_dir)
-        #         output_name = image_names[k]
-        #         index = output_name.rfind(".")
-        #         output_name = output_name[:index] + "_adversarial_result.png"
+            if save_plots:
+            # Construct the figure directory within the directory where the patch is
+                strs = numpy_patch_path.split('/')
+                fig_dir = os.path.join(*strs[:-2], 'figures')
+                if not os.path.exists(fig_dir):
+                    os.makedirs(fig_dir)
+                output_name = image_names[k]
+                index = output_name.rfind(".")
+                output_name = output_name[:index] + "_adversarial_result.png"
 
-        #     img = img.save(os.path.join(fig_dir, output_name))
+            img = img.save(os.path.join(fig_dir, output_name))
 
 
             # # Perform plotting using Pyplot from Matplotlib
