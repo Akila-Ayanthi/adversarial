@@ -951,7 +951,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
 
         # # Add a batch dimension
         combined_img = combined_img[np.newaxis,:,:,:]
-        # print(combined_img.shape)
+        print(combined_img.shape)
 
         #  # Calculate predictions for the combined image
         predictions = detect(combined_img, model, device)
@@ -962,32 +962,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             # Calculate the new bounding box
             bounding_box = predictions[0][0:4].detach().tolist()[0]
 
-        #     # transform = T.ToPILImage(mode=None)
-        #     # combined_img = combined_img.numpy()
-        #     # combined_img = np.transpose(combined_img[0,:,:,:], (1, 2, 0))
-        #     # print(combined_img)
-        #     # img = transform(combined_img[0,:,:,:])
-            img = cv2.cvtColor(combined_img[0,:,:,:].permute(1, 2, 0).cpu().numpy(), cv2.COLOR_BGR2RGB)
-            print(img.shape)
-            # img  = combined_img[0,:,:,:].permute(1, 2, 0).cpu().numpy()
-            # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            # img = combined_img[0,:,:,:].int()
-            # print(img.shape)
-            img = T.ToPILImage(mode='RGB')(img)
-            print(img)
-            # plt.imshow(img)
-            # plt.savefig('test_.png')
 
-
-            # img  = combined_img[0,:,:,:].int().permute(1, 2, 0).cpu().numpy() # make sure tensor is on cpu
-        #     # print(img)
-        #     # c_img = cv2.cvtColor(np.float32(single_image), cv2.COLOR_RGB2BGR)
-        # img = single_image.cpu().numpy()
-        # print(img.shape)
-        # #     # c_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        # #     # print(img)
-        # #     # cv2.imwrite(combined_img, "image.png")
-        # #     # print(combined_img[0][0])
 
         if save_plots:
         # Construct the figure directory within the directory where the patch is
