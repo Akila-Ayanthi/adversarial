@@ -968,6 +968,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
         #     # print(combined_img)
         #     # img = transform(combined_img[0,:,:,:])
             img = cv2.cvtColor(combined_img[0,:,:,:].permute(1, 2, 0).cpu().numpy(), cv2.COLOR_BGRA2RGB)
+            print(img.shape)
             # img  = combined_img[0,:,:,:].permute(1, 2, 0).cpu().numpy()
             # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             # img = combined_img[0,:,:,:].int()
