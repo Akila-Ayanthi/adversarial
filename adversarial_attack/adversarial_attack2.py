@@ -63,6 +63,7 @@ def apply_patch(positions,patched_img, adv_patch,givenX=None,givenY=None,randomi
     patch_height = adv_patch.shape[1]
     patch_width = adv_patch.shape[2]
 
+    print("apply patch from inside generate attack")
     print(patch_height)
     print(patch_width)
 
@@ -121,6 +122,9 @@ def calculate_positions(patched_img, adv_patch, truths,offset):
     img_width = patched_img.shape[2]
     patch_height = adv_patch.shape[1]
     patch_width = adv_patch.shape[2]
+    print("calculate_positions")
+    print(patch_height)
+    print(patch_width)
 
 
     #Convert bounding box coordinates to list of form (x1,y1,x2,y2) for the  bounding box
@@ -349,6 +353,7 @@ def generate_attack(names,writer,model, device, run_name, image_path, load_path,
 
     # Optimization loop
     for t in range(load_epoch+1,load_epoch+epochs+1):
+        print("optimization loop")
 
         # Learning rate scheduler
         if t and t % lr_length == 0:
@@ -425,6 +430,8 @@ def generate_attack(names,writer,model, device, run_name, image_path, load_path,
 
             # Modify delta by lr according to the data_grad
             delta = fgsm_attack(delta, lr, data_grad)
+            print("delta modified by fgsm attack")
+            print(delta.shape)
             # Clamp delta
             delta = delta.data.clamp(0, 255)
             # Reatach a gradient to delta
