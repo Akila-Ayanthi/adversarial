@@ -971,7 +971,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             # print(img)
             # c_img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
             img = single_image.cpu().numpy()
-            c_img = cv2.cvtColor(img[0], cv2.COLOR_RGB2BGR)
+            c_img = cv2.cvtColor(img[0], cv2.COLOR_BGR2RGB)
             # print(img)
             # cv2.imwrite(combined_img, "image.png")
             # print(combined_img[0][0])
