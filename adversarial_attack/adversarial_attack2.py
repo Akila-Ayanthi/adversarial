@@ -947,7 +947,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
         combined_img = apply_patch(patched_img=single_image,adv_patch=delta,positions=image_locations)
 
         # Add a batch dimension
-        combined_img = combined_img[np.newaxis,:,:,:]
+        # combined_img = combined_img[np.newaxis,:,:,:]
 
          # Calculate predictions for the combined image
         predictions = detect(combined_img, model, device)
@@ -963,7 +963,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             # combined_img = np.transpose(combined_img[0,:,:,:], (1, 2, 0))
             # print(combined_img)
             # img = transform(combined_img[0,:,:,:])
-            img = T.ToPILImage()(combined_img[0,:,:,:].permute(1, 2, 0))
+            img = T.ToPILImage()(combined_img[0,:,:,:])
             print(img)
 
             if save_plots:
