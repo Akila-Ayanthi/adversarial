@@ -974,25 +974,25 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
         #     # img  = combined_img[0,:,:,:].int().permute(1, 2, 0).cpu().numpy() # make sure tensor is on cpu
         #     # print(img)
         #     # c_img = cv2.cvtColor(np.float32(single_image), cv2.COLOR_RGB2BGR)
-        img = single_image.cpu().numpy()
-        print(img.shape)
-        #     # c_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        #     # print(img)
-        #     # cv2.imwrite(combined_img, "image.png")
-        #     # print(combined_img[0][0])
+        # img = single_image.cpu().numpy()
+        # print(img.shape)
+        # #     # c_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        # #     # print(img)
+        # #     # cv2.imwrite(combined_img, "image.png")
+        # #     # print(combined_img[0][0])
 
-        if save_plots:
-        # Construct the figure directory within the directory where the patch is
-            strs = numpy_patch_path.split('/')
-            fig_dir = os.path.join(*strs[:-2], 'figures')
-            if not os.path.exists(fig_dir):
-                os.makedirs(fig_dir)
-            output_name = image_names[k]
-            index = output_name.rfind(".")
-            output_name = output_name[:index] + "_adversarial_result.png"
+        # if save_plots:
+        # # Construct the figure directory within the directory where the patch is
+        #     strs = numpy_patch_path.split('/')
+        #     fig_dir = os.path.join(*strs[:-2], 'figures')
+        #     if not os.path.exists(fig_dir):
+        #         os.makedirs(fig_dir)
+        #     output_name = image_names[k]
+        #     index = output_name.rfind(".")
+        #     output_name = output_name[:index] + "_adversarial_result.png"
 
         #     # img = img.save(os.path.join(fig_dir, output_name))
-        cv2.imwrite(str(os.path.join(fig_dir, output_name)), img)
+        # cv2.imwrite(str(os.path.join(fig_dir, output_name)), img)
 
 
             # # Perform plotting using Pyplot from Matplotlib
