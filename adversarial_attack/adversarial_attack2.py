@@ -8,6 +8,7 @@ import torch
 import torch.nn as nn
 import torchvision
 import torchvision.transforms as T
+import PIL
 from PIL import Image
 import pandas as pd
 import numpy as np
