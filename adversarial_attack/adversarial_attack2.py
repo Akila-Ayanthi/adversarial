@@ -963,20 +963,20 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             # combined_img = np.transpose(combined_img[0,:,:,:], (1, 2, 0))
             # print(combined_img)
             # img = transform(combined_img[0,:,:,:])
-            img = T.ToPILImage(mode='L')(combined_img)
-            print(img)
+            # img = T.ToPILImage(mode='L')(combined_img[0])
+            print(combined_img)
 
-            if save_plots:
-            # Construct the figure directory within the directory where the patch is
-                strs = numpy_patch_path.split('/')
-                fig_dir = os.path.join(*strs[:-2], 'figures')
-                if not os.path.exists(fig_dir):
-                    os.makedirs(fig_dir)
-                output_name = image_names[k]
-                index = output_name.rfind(".")
-                output_name = output_name[:index] + "_adversarial_result.png"
+            # if save_plots:
+            # # Construct the figure directory within the directory where the patch is
+            #     strs = numpy_patch_path.split('/')
+            #     fig_dir = os.path.join(*strs[:-2], 'figures')
+            #     if not os.path.exists(fig_dir):
+            #         os.makedirs(fig_dir)
+            #     output_name = image_names[k]
+            #     index = output_name.rfind(".")
+            #     output_name = output_name[:index] + "_adversarial_result.png"
 
-            img = img.save(os.path.join(fig_dir, output_name))
+            # img = img.save(os.path.join(fig_dir, output_name))
 
 
             # # Perform plotting using Pyplot from Matplotlib
