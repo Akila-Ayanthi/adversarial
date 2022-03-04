@@ -950,7 +950,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
         print(combined_img.shape)
 
         # # Add a batch dimension
-        # combined_img = combined_img[np.newaxis,:,:,:]
+        combined_img = combined_img[np.newaxis,:,:,:]
         # print(combined_img.shape)
 
         #  # Calculate predictions for the combined image
@@ -968,7 +968,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
         #     # print(combined_img)
         #     # img = transform(combined_img[0,:,:,:])
         #     # img = cv2.cvtColor(np.array(combined_img[0].int()), cv2.COLOR_RGB2BGR)
-            img = T.ToPILImage(mode=None)(combined_img)
+            img = T.ToPILImage(mode=None)(combined_img[0])
             print(img)
 
 
