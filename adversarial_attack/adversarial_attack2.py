@@ -963,19 +963,26 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             # Calculate the new bounding box
             bounding_box = predictions[0][0:4].detach().tolist()[0]
 
+        tensor = combined_img*255
+        tensor = np.array(tensor, dtype=np.uint8)
+        if np.ndim(tensor)>3:
+            assert tensor.shape[0] == 1
+            tensor = tensor[0]
+        img = PIL.Image.fromarray(tensor)
+        print(img)
 
 
-        if save_plots:
-        # Construct the figure directory within the directory where the patch is
-            strs = numpy_patch_path.split('/')
-            fig_dir = os.path.join(*strs[:-2], 'figures')
-            if not os.path.exists(fig_dir):
-                os.makedirs(fig_dir)
-            output_name = image_names[k]
-            index = output_name.rfind(".")
-            output_name = output_name[:index] + "_adversarial_result.png"
+        # if save_plots:
+        # # Construct the figure directory within the directory where the patch is
+        #     strs = numpy_patch_path.split('/')
+        #     fig_dir = os.path.join(*strs[:-2], 'figures')
+        #     if not os.path.exists(fig_dir):
+        #         os.makedirs(fig_dir)
+        #     output_name = image_names[k]
+        #     index = output_name.rfind(".")
+        #     output_name = output_name[:index] + "_adversarial_result.png"
 
-        img = img.save(os.path.join(fig_dir, output_name))
+        # img = img.save(os.path.join(fig_dir, output_name))
         # cv2.imwrite(str(os.path.join(fig_dir, output_name)), img)
 
 
