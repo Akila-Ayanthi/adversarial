@@ -205,7 +205,7 @@ def load_image(path,height,width):
             continue
         image_names.append(file)
         image = cv2.imread(os.path.join(path,file))
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) # Perform color conversion from BGR to RBG
+        # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) # Perform color conversion from BGR to RBG
         image = cv2.resize(image,(width,height),interpolation=cv2.INTER_NEAREST) # Resize the image to the desired dimensions
         image = image[np.newaxis, :, :, :] # Add a batch axis for concatination
         if first == True:
@@ -983,7 +983,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
                 output_name = output_name[:index] + "_adversarial_result.png"
 
             # img = img.save(os.path.join(fig_dir, output_name))
-            cv2.imwrite(str(os.path.join(fig_dir, output_name)), cv2.cvtColor(img[0], cv2.COLOR_RGB2BGR))
+            cv2.imwrite(str(os.path.join(fig_dir, output_name)), img[0]))
 
 
             # # Perform plotting using Pyplot from Matplotlib
