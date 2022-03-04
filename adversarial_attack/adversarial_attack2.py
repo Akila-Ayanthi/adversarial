@@ -925,6 +925,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
 
         # Seperate the batch to obtain a tensor with batch size 1
         single_image = image_tensor[k, :, :, :]
+        print(single_image)
 
         # Perform plotting using Pyplot from Matplotlib
         # fig = plt.figure(k,figsize=(6,4))
@@ -966,7 +967,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             # img = T.ToPILImage(mode=None)(combined_img.permute(1, 2, 0))
 
             # img  = combined_img[0,:,:,:].int().permute(1, 2, 0).cpu().numpy() # make sure tensor is on cpu
-            img = single_image[0].cpu().numpy()
+            img = single_image.cpu().numpy()
             print(img)
             # cv2.imwrite(combined_img, "image.png")
             # print(combined_img[0][0])
