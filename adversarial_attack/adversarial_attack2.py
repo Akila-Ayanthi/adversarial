@@ -963,14 +963,14 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             # Calculate the new bounding box
             bounding_box = predictions[0][0:4].detach().tolist()[0]
 
-        tensor = combined_img*255
+        tensor = combined_img[0,:,:,:].permute(1, 2, 0)*255
         tensor = np.array(tensor, dtype=np.uint8)
         print(np.ndim(tensor))
         if np.ndim(tensor)>3:
             assert tensor.shape[0] == 1
             tensor = tensor[0]
         print(tensor.shape)
-        img = PIL.Image.fromarray(tensor.permute(1, 2, 0))
+        img = PIL.Image.fromarray(tensor)
         print(img)
 
 
