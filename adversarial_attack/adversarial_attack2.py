@@ -63,6 +63,9 @@ def apply_patch(positions,patched_img, adv_patch,givenX=None,givenY=None,randomi
     patch_height = adv_patch.shape[1]
     patch_width = adv_patch.shape[2]
 
+    print(patch_height)
+    print(patch_width)
+
     if randomize == True:
 
         # Pick a random (x,y) from positions
