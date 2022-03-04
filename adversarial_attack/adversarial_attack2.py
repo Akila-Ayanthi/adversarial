@@ -970,7 +970,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             assert tensor.shape[0] == 1
             tensor = tensor[0]
         print(tensor.shape)
-        img = PIL.Image.fromarray(tensor)
+        img = PIL.Image.fromarray(tensor.permute(1, 2, 0))
         print(img)
 
 
