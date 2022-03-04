@@ -950,17 +950,17 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
         print(combined_img.shape)
 
         # # Add a batch dimension
-        combined_img = combined_img[np.newaxis,:,:,:]
-        print(combined_img.shape)
+        # combined_img = combined_img[np.newaxis,:,:,:]
+        # print(combined_img.shape)
 
         #  # Calculate predictions for the combined image
-        # predictions = detect(combined_img, model, device)
+        predictions = detect(combined_img, model, device)
 
-        # if predictions != []:
-        #     # Generate the label for the image
-        #     string = names[int(predictions[0][0][5].item())]  + " " + str(round(predictions[0][0][4].item(), 4))
-        #     # Calculate the new bounding box
-        #     bounding_box = predictions[0][0:4].detach().tolist()[0]
+        if predictions != []:
+            # Generate the label for the image
+            string = names[int(predictions[0][0][5].item())]  + " " + str(round(predictions[0][0][4].item(), 4))
+            # Calculate the new bounding box
+            bounding_box = predictions[0][0:4].detach().tolist()[0]
 
         #     # transform = T.ToPILImage(mode=None)
         #     # combined_img = combined_img.numpy()
@@ -968,7 +968,8 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
         #     # print(combined_img)
         #     # img = transform(combined_img[0,:,:,:])
         #     # img = cv2.cvtColor(np.array(combined_img[0].int()), cv2.COLOR_RGB2BGR)
-        #     # img = T.ToPILImage(mode=None)(img)
+            img = T.ToPILImage(mode=None)(combined_img)
+            print(img)
 
 
         #     # img  = combined_img[0,:,:,:].int().permute(1, 2, 0).cpu().numpy() # make sure tensor is on cpu
