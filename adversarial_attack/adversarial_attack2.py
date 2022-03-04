@@ -560,6 +560,8 @@ def generate_attack(names,writer,model, device, run_name, image_path, load_path,
     # Once training is over, save all deltas
     if return_output == False:
         save_delta = delta.detach().permute(1, 2, 0).numpy()
+        print("save delta shape")
+        print(save_delta.shape)
         # Save delta as a .jpg
         cv2.imwrite(os.path.join(result_path, 'jpg_files', 'final_patch.jpg'), save_delta)
         numpy_save = delta.detach().numpy()
