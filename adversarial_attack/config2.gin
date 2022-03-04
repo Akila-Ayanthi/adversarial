@@ -1,7 +1,7 @@
 ################################################ YoloV3 Adversarial Attack Generator ################################################
 
 # # ------------ Run Command Options ------------
-run_script.execute = 'train'                                                           # Main logic command: choose from ('train','visualize','evaluate','optimize')
+run_script.execute = 'visualize'                                                           # Main logic command: choose from ('train','visualize','evaluate','optimize')
 run_script.device = 'cuda'                                                                                  # Device to run on ('cpu' or 'cuda:0' 'cuda')
 run_script.coco_names = 'yolov3/data/coco.names'                                                           # Path to the coco names file (string)
 run_script.log_file_name = 'training0_log.txt'                                                             # Logging file to capture console logging (string)
@@ -36,7 +36,7 @@ generate_attack.lr_scale = 0.80                                                 
 generate_attack.lr_length = 40                                                                             # Drop learning rate every lr_length epochs (int)
 generate_attack.patience  = 100                                                                            # Give up if we haven't reduced confidence in patience epochs (int)
 generate_attack.load = False                                                                               # Option to restart training from previously saved files (boolean)
-generate_attack.load_path = 'results/full_dataset/numpy_files/final_model.npy'                             # Path to a saved .npy file with associated state dictionary if load = True  (string)
+generate_attack.load_path = 'results/training0/numpy_files/final_model.npy'                             # Path to a saved .npy file with associated state dictionary if load = True  (string)
 generate_attack.randomize = True                                                                           # Option to randomize and use EOT to average gradients (boolean)
 generate_attack.givenX = 100                                                                               # Specific X to train a patch if randomize = False (int)
 generate_attack.givenY = 33                                                                                # Specific Y to train a patch if randomize = False (int)
