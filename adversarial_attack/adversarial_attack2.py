@@ -965,7 +965,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             # img = transform(combined_img[0,:,:,:])
             # img = T.ToPILImage(mode=None)(combined_img.permute(1, 2, 0))
 
-            img  = combined_img[0,:,:,:].int().permute(2, 1, 0).cpu().numpy() # make sure tensor is on cpu
+            img  = combined_img[0,:,:,:].int().permute(1, 2, 0).cpu().numpy() # make sure tensor is on cpu
             print(img)
             # cv2.imwrite(combined_img, "image.png")
             # print(combined_img[0][0])
@@ -981,7 +981,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
                 output_name = output_name[:index] + "_adversarial_result.png"
 
             # img = img.save(os.path.join(fig_dir, output_name))
-            cv2.imwrite(str(os.path.join(fig_dir, output_name)), img)
+            cv2.imwrite(str(os.path.join(fig_dir, output_name)), single_image)
 
 
             # # Perform plotting using Pyplot from Matplotlib
