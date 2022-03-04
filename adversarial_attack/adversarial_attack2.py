@@ -966,9 +966,10 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
         tensor = combined_img*255
         tensor = np.array(tensor, dtype=np.uint8)
         print(np.ndim(tensor))
-        # if np.ndim(tensor)>3:
-        #     assert tensor.shape[0] == 1
-        tensor = tensor[0]
+        if np.ndim(tensor)>3:
+            assert tensor.shape[0] == 1
+            tensor = tensor[0]
+        print(tensor.shape)
         img = PIL.Image.fromarray(tensor)
         print(img)
 
