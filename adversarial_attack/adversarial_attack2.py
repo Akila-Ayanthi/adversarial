@@ -964,7 +964,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             # print(combined_img)
             # img = transform(combined_img[0,:,:,:])
             # img = T.ToPILImage(mode='L')(combined_img[0])
-            print(combined_img)
+            print(combined_img[0][0])
 
             # if save_plots:
             # # Construct the figure directory within the directory where the patch is
