@@ -967,12 +967,13 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
         #     # combined_img = np.transpose(combined_img[0,:,:,:], (1, 2, 0))
         #     # print(combined_img)
         #     # img = transform(combined_img[0,:,:,:])
-            img = cv2.cvtColor(np.array(combined_img[0].int()), cv2.COLOR_BGR2RGB)
+            # img = cv2.cvtColor(np.array(combined_img.int()), cv2.COLOR_BGR2RGB)
+            img  = combined_img[0,:,:,:].int().permute(1, 2, 0).cpu().numpy()
             img = T.ToPILImage(mode=None)(img)
             print(img)
 
 
-        #     # img  = combined_img[0,:,:,:].int().permute(1, 2, 0).cpu().numpy() # make sure tensor is on cpu
+            img  = combined_img[0,:,:,:].int().permute(1, 2, 0).cpu().numpy() # make sure tensor is on cpu
         #     # print(img)
         #     # c_img = cv2.cvtColor(np.float32(single_image), cv2.COLOR_RGB2BGR)
         # img = single_image.cpu().numpy()
