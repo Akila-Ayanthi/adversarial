@@ -964,10 +964,11 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             # combined_img = np.transpose(combined_img[0,:,:,:], (1, 2, 0))
             # print(combined_img)
             # img = transform(combined_img[0,:,:,:])
-            img = cv2.cvtColor(np.array(combined_img[0].int()), cv2.COLOR_RGB2BGR)
-            img = T.ToPILImage(mode=None)(img)
+            # img = cv2.cvtColor(np.array(combined_img[0].int()), cv2.COLOR_RGB2BGR)
+            # img = T.ToPILImage(mode=None)(img)
 
-            # img  = combined_img[0,:,:,:].int().permute(1, 2, 0).cpu().numpy() # make sure tensor is on cpu
+            img  = combined_img[0,:,:,:].int().permute(1, 2, 0).cpu().numpy() # make sure tensor is on cpu
+            img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
             # img = single_image.cpu().numpy()
             # print(img)
             # cv2.imwrite(combined_img, "image.png")
@@ -983,8 +984,8 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
                 index = output_name.rfind(".")
                 output_name = output_name[:index] + "_adversarial_result.png"
 
-            img = img.save(os.path.join(fig_dir, output_name))
-            # cv2.imwrite(str(os.path.join(fig_dir, output_name)), img[0])
+            # img = img.save(os.path.join(fig_dir, output_name))
+            cv2.imwrite(str(os.path.join(fig_dir, output_name)), img[0])
 
 
             # # Perform plotting using Pyplot from Matplotlib
