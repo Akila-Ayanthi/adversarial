@@ -964,7 +964,8 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             # combined_img = np.transpose(combined_img[0,:,:,:], (1, 2, 0))
             # print(combined_img)
             # img = transform(combined_img[0,:,:,:])
-            img = T.ToPILImage(mode=None)(single_image)
+            img = cv2.cvtColor(combined_img, cv2.COLOR_RGB2BGR)
+            img = T.ToPILImage(mode=None)(img)
 
             # img  = combined_img[0,:,:,:].int().permute(1, 2, 0).cpu().numpy() # make sure tensor is on cpu
             # img = single_image.cpu().numpy()
