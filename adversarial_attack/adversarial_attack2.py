@@ -969,7 +969,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
         #     # img = transform(combined_img[0,:,:,:])
             # img = cv2.cvtColor(np.array(combined_img.int()), cv2.COLOR_BGR2RGB)
             img  = combined_img[0,:,:,:].permute(1, 2, 0).cpu().numpy()
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             img = T.ToPILImage(mode=None)(img)
             print(img)
 
