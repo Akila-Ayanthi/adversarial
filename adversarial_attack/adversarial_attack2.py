@@ -63,7 +63,7 @@ def apply_patch(positions,patched_img, adv_patch,givenX=None,givenY=None,randomi
     patch_height = adv_patch.shape[1]
     patch_width = adv_patch.shape[2]
 
-    print("apply patch from inside generate attack")
+    print("apply patch")
     print(patch_height)
     print(patch_width)
 
@@ -936,6 +936,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
 
         # Load the adversarial patch
         delta = torch.from_numpy(np.load(numpy_patch_path))
+        print(delta.shape)
 
         # Calculate acceptable positions foe the patch
         image_locations = calculate_positions(single_image, delta, truth, offset)
