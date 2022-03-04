@@ -939,17 +939,19 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
 
 
         # Load the adversarial patch
-        # delta = torch.from_numpy(np.load(numpy_patch_path))
+        delta = torch.from_numpy(np.load(numpy_patch_path))
         # print(delta.shape)
 
         # # Calculate acceptable positions foe the patch
-        # image_locations = calculate_positions(single_image, delta, truth, offset)
+        image_locations = calculate_positions(single_image, delta, truth, offset)
 
         # # Combine the image and the path
-        # combined_img = apply_patch(patched_img=single_image,adv_patch=delta,positions=image_locations)
+        combined_img = apply_patch(patched_img=single_image,adv_patch=delta,positions=image_locations)
+        print(combined_img.shape)
 
         # # Add a batch dimension
-        # combined_img = combined_img[np.newaxis,:,:,:]
+        combined_img = combined_img[np.newaxis,:,:,:]
+        print(combined_img.shape)
 
         #  # Calculate predictions for the combined image
         # predictions = detect(combined_img, model, device)
