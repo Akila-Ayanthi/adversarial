@@ -969,7 +969,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
         # if np.ndim(tensor)>3:
         #     assert tensor.shape[0] == 1
         #     tensor = tensor[0]
-        img = PIL.Image.fromarray(tensor)
+        img = PIL.Image.fromarray(tensor[0])
         print(img)
 
 
