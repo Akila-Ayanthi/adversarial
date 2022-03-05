@@ -992,7 +992,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             index = output_name.rfind(".")
             output_name = output_name[:index] + "_adversarial_result.png"
         print(output_name)
-        save_image(x_ad, output_name)
+        save_image(combined_img.permute(0, 1, 3, 2), output_name)
 
         # img = img.save(os.path.join(fig_dir, output_name))
         # cv2.imwrite(str(os.path.join(fig_dir, output_name)), img)
