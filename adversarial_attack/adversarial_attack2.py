@@ -976,8 +976,9 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             bounding_box = predictions[0][0:4].detach().tolist()[0]
 
         # x_ad = torch.tensor(x_adv)
-        dtype = torch.DoubleTensor
+        dtype = torch.FloatTensor
         x_ad = combined_img.permute(0, 3, 2, 1)
+        print(x_ad.shape)
         rotated_im = rot_img(x_ad, np.pi/2*3, dtype)
                 
 
