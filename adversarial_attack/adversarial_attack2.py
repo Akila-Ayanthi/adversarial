@@ -964,7 +964,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
         # # Add a batch dimension
         combined_img = combined_img[np.newaxis,:,:,:]
         print(combined_img.shape)
-        print(combined_img)
+        print(combined_img.dtype)
 
         #  # Calculate predictions for the combined image
         predictions = detect(combined_img, model, device)
