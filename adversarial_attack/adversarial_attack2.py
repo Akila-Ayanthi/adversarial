@@ -977,7 +977,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
 
         # x_ad = torch.tensor(x_adv)
         # dtype = torch.FloatTensor
-        # x_ad = combined_img.permute(0, 3, 2, 1)
+        x_ad = combined_img.permute(0, 3, 2, 1)
         # print(combined_img.shape)
         # rotated_im = rot_img(combined_img, np.pi/2*3, dtype)
                 
@@ -992,7 +992,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             index = output_name.rfind(".")
             output_name = output_name[:index] + "_adversarial_result.png"
         print(output_name)
-        save_image(combined_img, output_name)
+        save_image(x_ad, output_name)
 
         # img = img.save(os.path.join(fig_dir, output_name))
         # cv2.imwrite(str(os.path.join(fig_dir, output_name)), img)
