@@ -8,6 +8,7 @@ import torch
 import torch.nn as nn
 import torchvision
 import torchvision.transforms as T
+from torchvision.utils import save_image
 import PIL
 from PIL import Image
 import pandas as pd
@@ -33,6 +34,17 @@ mearly modified for use here. Enjoy, and feel free to email me at ianmcdiarmidst
 --------------------------------------------------
 
 """
+
+def get_rot_mat(theta):
+    theta = torch.tensor(theta)
+    return torch.tensor([[torch.cos(theta), -torch.sin(theta), 0],
+                         [torch.sin(theta), torch.cos(theta), 0]])
+
+def rot_img(x, theta, dtype):
+    rot_mat = get_rot_mat(theta)[None, ...].type(dtype).repeat(x.shape[0],1,1)
+    grid = F.affine_grid(rot_mat, x.size()).type(dtype)
+    x = F.grid_sample(x, grid)
+    return x
 
 @gin.configurable()
 def apply_patch(positions,patched_img, adv_patch,givenX=None,givenY=None,randomize=True):
@@ -963,16 +975,11 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             # Calculate the new bounding box
             bounding_box = predictions[0][0:4].detach().tolist()[0]
 
-        tensor = combined_img[0,:,:,:].permute(1, 2, 0)*255
-        tensor = np.array(tensor, dtype=np.uint8)
-        print(np.ndim(tensor))
-        if np.ndim(tensor)>3:
-            assert tensor.shape[0] == 1
-            tensor = tensor[0]
-        print(tensor.shape)
-        img = PIL.Image.fromarray(tensor)
-        print(img)
-
+        # x_ad = torch.tensor(x_adv)
+        dtype = torch.DoubleTensor
+        x_ad = combined_img.permute(0, 3, 2, 1)
+        rotated_im = rot_img(x_ad, np.pi/2*3, dtype)
+                
 
         if save_plots:
         # Construct the figure directory within the directory where the patch is
@@ -984,7 +991,9 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             index = output_name.rfind(".")
             output_name = output_name[:index] + "_adversarial_result.png"
 
-        img = img.save(os.path.join(fig_dir, output_name))
+        save_image(rotated_im, output_name)
+
+        # img = img.save(os.path.join(fig_dir, output_name))
         # cv2.imwrite(str(os.path.join(fig_dir, output_name)), img)
 
 
