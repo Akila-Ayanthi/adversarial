@@ -991,7 +991,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
             output_name = image_names[k]
             index = output_name.rfind(".")
             output_name = output_name[:index] + "_adversarial_result.png"
-
+        print(output_name)
         save_image(rotated_im, output_name)
 
         # img = img.save(os.path.join(fig_dir, output_name))
