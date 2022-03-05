@@ -977,9 +977,9 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
 
         # x_ad = torch.tensor(x_adv)
         dtype = torch.FloatTensor
-        x_ad = combined_img.permute(0, 3, 2, 1)
-        print(x_ad.shape)
-        rotated_im = rot_img(x_ad, np.pi/2*3, dtype)
+        # x_ad = combined_img.permute(0, 3, 2, 1)
+        print(combined_img.shape)
+        rotated_im = rot_img(combined_img, np.pi/2*3, dtype)
                 
 
         if save_plots:
