@@ -964,7 +964,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
         # # Add a batch dimension
         combined_img = combined_img[np.newaxis,:,:,:]
         print(combined_img.shape)
-        print(combined_img[0].shape)
+        print(combined_img)
 
         #  # Calculate predictions for the combined image
         predictions = detect(combined_img, model, device)
@@ -977,7 +977,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
 
         # x_ad = torch.tensor(x_adv)
         # dtype = torch.FloatTensor
-        x_ad = combined_img.permute(0, 3, 2, 1)
+        # x_ad = combined_img.permute(0, 3, 2, 1)
         # print(combined_img.shape)
         # rotated_im = rot_img(combined_img, np.pi/2*3, dtype)
                 
