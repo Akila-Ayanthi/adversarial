@@ -939,7 +939,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
         # Seperate the batch to obtain a tensor with batch size 1
         single_image = image_tensor[k, :, :, :]
         print(single_image)
-        single_image = single_image.astype(np.float32)
+        single_image = single_image.float()
         print(single_image)
 
         # Perform plotting using Pyplot from Matplotlib
