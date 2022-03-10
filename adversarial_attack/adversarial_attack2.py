@@ -940,7 +940,7 @@ def visualize(names, model, device, image_path, numpy_patch_path, offset, height
         single_image = image_tensor[k, :, :, :]
         print(single_image)
         single_image = single_image.float()
-        print(single_image)
+        print(single_image.shape)
 
         # Perform plotting using Pyplot from Matplotlib
         # fig = plt.figure(k,figsize=(6,4))
